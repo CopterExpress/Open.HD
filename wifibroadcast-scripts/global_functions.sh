@@ -116,6 +116,8 @@ function check_exitstatus {
 function check_camera_attached {
 	# check if cam is detected to determine if we're going to be RX or TX
 	# only do this on one tty so that we don't run vcgencmd multiple times (which may make it hang)
+	# for no camera mode the settings file will get read and set cam=1 to force that pi to be air
+      if [ -z ${CAM+x} ]; then
 	if [ "$TTY" == "/dev/tty1" ]; then
 		CAM=`/usr/bin/vcgencmd get_camera | nice grep -c detected=1`
 		if [ "$CAM" == "0" ]; then # if we are RX ...
@@ -132,6 +134,11 @@ function check_camera_attached {
 		done
 		CAM=`cat /tmp/cam`
 	fi
+      else
+          #forcing cam=1 to force this pi to be AIR
+	  touch /tmp/TX
+	  echo  "1" > /tmp/cam
+      fi
 }
 
 function set_font_for_resolution {
