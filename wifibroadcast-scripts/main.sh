@@ -53,7 +53,6 @@ FC_TELEMETRY_STTY_OPTIONS="-icrnl -ocrnl -imaxbel -opost -isig -icanon -echo -ec
 EXTERNAL_TELEMETRY_SERIALPORT_GROUND_STTY_OPTIONS="-icrnl -ocrnl -imaxbel -opost -isig -icanon -echo -echoe -ixoff -ixon"
 TELEMETRY_OUTPUT_SERIALPORT_GROUND_STTY_OPTIONS="-icrnl -ocrnl -imaxbel -opost -isig -icanon -echo -echoe -ixoff -ixon"
 
-
 ###############################################################################
 # Include sub sources
 ###############################################################################
@@ -135,7 +134,7 @@ case $TTY in
 	    OHDHOSTNAME="openhd-AirPi"
 	fi
 	# only configure ethernet network interface via DHCP if ethernet hotspot is disabled
-	if [ "$ETHERNET_HOTSPOT" == "N" ]; then
+	if [ "$ETHERNET_HOTSPOT" == "N" ] || [ "$ETHERNET_CLIENT" == "Y" ]; then
 		# disabled loop, as usual, everything is flaky on the Pi, gives kernel stall messages ...
 		nice ifconfig eth0 up
 		sleep 5

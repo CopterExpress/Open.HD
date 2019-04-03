@@ -164,6 +164,15 @@ WIFI_HOTSPOT_NIC=internal
 # to another computer or other device connected to the Raspberry via Ethernet
 ETHERNET_HOTSPOT=N
 #
+# set this to "Y" if you connect your Open.HD-RX to external router with DHCP
+ETHERNET_CLIENT="Y"
+#
+# IP address of a device into network to which you want to send telemetry
+ETHERNET_CLIENT_TELEM_IP="192.168.0.135"
+#
+# IP address of a device into network to which you want to send video
+ETHERNET_CLIENT_VIDEO_IP="192.168.0.135"
+#
 # Set to "Y" to enable periodic screenshots every 10 seconds
 ENABLE_SCREENSHOTS=N
 #
