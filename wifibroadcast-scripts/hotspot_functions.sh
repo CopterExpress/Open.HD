@@ -86,8 +86,8 @@ function hotspot_check_function {
             fi
         fi
 
-				# If you use external router as DHCP server and sends everything to a network
-				if [ "$ETHERNET_CLIENT" == "Y" ]; then
+	# If you use external router as DHCP server and sends everything to a network
+	if [ "$ETHERNET_CLIENT" == "Y" ]; then
             if nice ping -I eth0 -c 1 -W 1 -n -q $ETHERNET_CLIENT_TELEM_IP > /dev/null 2>&1; then
                 IP=$ETHERNET_CLIENT_TELEM_IP
                 echo "Ethernet device detected. IP: $IP"
@@ -96,7 +96,7 @@ function hotspot_check_function {
                 nice /home/pi/wifibroadcast-base/rssi_forward $IP 5003 &
                 
                 if [ "$FORWARD_STREAM" == "rtp" ]; then
-                    ionice -c 1 -n 4 nice -n -5 cat /root/videofifo2 | nice -n -5 gst-launch-1.0 fdsrc ! h264parse ! rtph264pay pt=96 config-interval=5 ! udpsink port=$VIDEO_UDP_PORT host=$IP > /dev/null 2>&1 &
+                    ionice -c 1 -n 4 nice -n -5 cat /root/videofifo2 | nice -n -5 gst-launch-1.0 fdsrc ! h264parse ! rtph264pay pt=96 config-interval=5 ! udpsink port=$VIDEO_UDP_PORT host=$ETHERNET_CLIENT_VIDEO_IP > /dev/null 2>&1 &
                 else
                     ionice -c 1 -n 4 nice -n -10 socat -b $VIDEO_UDP_BLOCKSIZE GOPEN:/root/videofifo2 UDP4-SENDTO:$ETHERNET_CLIENT_VIDEO_IP:$VIDEO_UDP_PORT &
                 fi
